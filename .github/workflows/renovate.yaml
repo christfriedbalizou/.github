@@ -48,14 +48,22 @@ jobs:
           owner: ${{ github.repository_owner }}
 
       - name: Renovate
-        uses: renovatebot/github-action@693b9ef15eec82123529a37c782242f091365961 # v46.1.14
+        uses: renovatebot/github-action@1cd96b855fee0da6f230617e89dbff0e06ea393a # v46.3.5
         env:
           LOG_LEVEL: ${{ inputs.logLevel || 'debug' }}
-          RENOVATE_DRY_RUN: ${{ inputs.dryRun == true }}
+          RENOVATE_DRY_RUN: ${{ inputs.dryRun && 'full' || '' }}
           RENOVATE_AUTODISCOVER: true
           RENOVATE_AUTODISCOVER_FILTER: ${{ github.repository_owner }}/${{ inputs.autodiscoverFilter || '*' }}
           RENOVATE_INTERNAL_CHECKS_FILTER: strict
           RENOVATE_PLATFORM: github
           RENOVATE_PLATFORM_COMMIT: true
+          SECRET_DOMAIN: ${{ secrets.SECRET_DOMAIN }}
+          FORGEJO_ACCESS_TOKEN: ${{ secrets.FORGEJO_ACCESS_TOKEN }}
         with:
           token: ${{ steps.app-token.outputs.token }}
+          configurationFile: .github/renovate.cjs
+          # renovate: datasource=docker depName=ghcr.io/renovatebot/renovate
+          renovate-version: 44.117.0
+          additional-env-list: |
+            SECRET_DOMAIN
+            FORGEJO_ACCESS_TOKEN
