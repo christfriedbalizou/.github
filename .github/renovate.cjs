@@ -7,6 +7,13 @@ if (!/^[a-zA-Z0-9]([a-zA-Z0-9.-]*[a-zA-Z0-9])?$/.test(SECRET_DOMAIN)) {
 }
 
 module.exports = {
+  packageRules: [
+    {
+      matchDatasources: ['forgejo-tags'],
+      matchPackageNames: ['christfried.balizou/translator'],
+      registryUrls: [`https://git.${SECRET_DOMAIN}`],
+    },
+  ],
   hostRules: [
     {
       hostType: 'forgejo-tags',
