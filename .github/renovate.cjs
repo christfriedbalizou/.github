@@ -10,7 +10,7 @@ module.exports = {
   packageRules: [
     {
       matchDatasources: ['forgejo-tags'],
-      matchPackageNames: ['christfried.balizou/translator'],
+      matchPackageNames: ['christfried.balizou/translator', 'christfried.balizou/tv-guides'],
       registryUrls: [`https://git.${SECRET_DOMAIN}`],
     },
   ],
